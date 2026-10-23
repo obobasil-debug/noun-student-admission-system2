@@ -50,13 +50,14 @@ On Replit, provide `SESSION_SECRET` through the Secrets tool. The configured web
 
 ## Create an administrator
 
-In a second terminal, from this directory, run:
+From the workspace root, run:
 
 ```bash
+cd artifacts/noun-admission-management
 python -m flask --app app create-admin
 ```
 
-Enter the administrator's name, email, and a password of at least 10 characters when prompted. The password is hashed before storage. Keep the administrator password private; it is not stored in this project.
+Enter the administrator's email and name, then choose and confirm a password of at least 10 characters when prompted. Password entry is hidden, and the password is hashed before storage. There is no default staff account or password. The command uses this application's SQLite database (`instance/admissions.sqlite3` by default); if `ADMISSIONS_DB_PATH` is set, it uses that database instead.
 
 ## Try the applicant and administrator flows
 

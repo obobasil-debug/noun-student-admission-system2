@@ -5,6 +5,7 @@
   <div class="auth-top"><span class="admin-mark">Staff workspace</span><h1>Review applications</h1><p class="muted">Demonstration access for admissions administrators.</p></div>
   <section class="auth-card">
     <h2>Staff sign in</h2><p class="intro">This is a prototype workspace, not a university system.</p>
+    <p class="muted">There is no default staff account or password. Create an administrator from the project terminal with <code>python -m flask --app app create-admin</code>. Applicant accounts cannot sign in here.</p>
     <form method="post">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="field-grid one-col">
