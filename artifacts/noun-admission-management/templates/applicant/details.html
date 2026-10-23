@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Application record details · Demonstration{% endblock %}
+{% block content %}
+<a class="back-link" href="/application/status">← Application status</a>
+<div class="page-heading"><div><p class="eyebrow">Applicant workspace</p><h1>Record details</h1><p>Review the information currently saved in your demonstration record.</p></div><a class="btn btn-secondary" href="/application/review">Review sections</a></div>
+<section class="card">
+  <div class="card-header"><div><h2>{{ application.applicant.full_name or 'Applicant record' }}</h2><p>Reference {{ application.reference or 'Demonstration record' }}</p></div><span class="status-pill {{ (application.status or 'draft')|lower|replace(' ', '-') }}">{{ application.status|default('Draft') }}</span></div>
+  <div class="review-section"><div class="review-title"><h3>Personal information</h3></div><dl class="summary-list">
+    <div class="summary-item"><dt>Email</dt><dd>{{ application.applicant.email or 'Not provided' }}</dd></div><div class="summary-item"><dt>Phone</dt><dd>{{ application.phone or 'Not provided' }}</dd></div><div class="summary-item"><dt>Date of birth</dt><dd>{{ application.date_of_birth or 'Not provided' }}</dd></div><div class="summary-item"><dt>Gender</dt><dd>{{ application.gender or 'Not provided' }}</dd></div><div class="summary-item"><dt>State of origin</dt><dd>{{ application.state_of_origin or 'Not provided' }}</dd></div><div class="summary-item"><dt>Address</dt><dd>{{ application.address or 'Not provided' }}</dd></div>
+  </dl></div>
+  <div class="review-section"><div class="review-title"><h3>Academic history</h3></div><dl class="summary-list">
+    <div class="summary-item"><dt>Highest qualification</dt><dd>{{ application.highest_qualification or 'Not provided' }}</dd></div><div class="summary-item"><dt>Prior institution</dt><dd>{{ application.prior_institution or 'Not provided' }}</dd></div><div class="summary-item"><dt>Examination body</dt><dd>{{ application.examination_body or 'Not provided' }}</dd></div><div class="summary-item"><dt>Graduation year</dt><dd>{{ application.graduation_year or 'Not provided' }}</dd></div><div class="summary-item"><dt>Grade</dt><dd>{{ application.grade or 'Not provided' }}</dd></div>
+  </dl></div>
+  <div class="review-section"><div class="review-title"><h3>Programme preference</h3></div><dl class="summary-list">
+    <div class="summary-item"><dt>Programme</dt><dd>{{ application.programme or 'Not provided' }}</dd></div><div class="summary-item"><dt>Study centre</dt><dd>{{ application.study_centre or 'Not provided' }}</dd></div><div class="summary-item"><dt>Submitted</dt><dd>{{ application.submitted_at or 'Not submitted' }}</dd></div><div class="summary-item"><dt>Last updated</dt><dd>{{ application.updated_at or application.created_at or '—' }}</dd></div>
+  </dl></div>
+  <div class="callout" style="margin-top:24px"><strong>Prototype record</strong>This record is illustrative only and does not constitute an official application or admissions decision.</div>
+</section>
+{% endblock %}

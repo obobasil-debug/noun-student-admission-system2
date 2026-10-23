@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Admissions workspace · Demonstration{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">A guided application experience</p>
+    <h1>Make your next step feel clear.</h1>
+    <p class="hero-copy">Explore a demonstration of an admissions workflow, from preparing applicant details to reviewing an application record. The process is designed to make each step visible and easy to follow.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="/register">Start a sample application</a>
+      <a class="btn btn-secondary" href="/login">Applicant sign in</a>
+    </div>
+    <p class="muted" style="margin-top:16px;font-size:12px">Already have an account? <a href="/login">Continue to your workspace</a></p>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="seal"><div class="seal-inner">N</div><span class="seal-caption">Learn · Prepare · Progress</span></div>
+  </div>
+</section>
+<section class="feature-grid" aria-label="Workspace highlights">
+  <article class="feature"><div class="feature-index">01 / PREPARE</div><h3>Build the picture</h3><p>Enter personal, academic and programme information through clearly grouped steps.</p></article>
+  <article class="feature"><div class="feature-index">02 / REVIEW</div><h3>Check before you send</h3><p>See a concise summary of the information entered before marking a sample application ready.</p></article>
+  <article class="feature"><div class="feature-index">03 / FOLLOW</div><h3>Know what comes next</h3><p>Track a sample application status and see where a record sits in the review workflow.</p></article>
+</section>
+<section class="notice-card home-note">
+  <span class="notice-icon" aria-hidden="true">i</span>
+  <div><strong>Important: demonstration prototype</strong><p>This independent academic prototype is not an official NOUN website or admissions channel. Do not enter real personal information, upload real documents, or use it as admissions guidance. For authoritative information, consult the university’s official channels.</p></div>
+</section>
+<section class="section-space">
+  <div class="page-heading"><div><p class="eyebrow">For admissions teams</p><h2>A focused review workspace</h2><p>Demonstration staff screens organize application records, status updates and review notes in one straightforward interface.</p></div><a class="btn btn-secondary" href="/admin/login">Staff sign in</a></div>
+</section>
+{% endblock %}

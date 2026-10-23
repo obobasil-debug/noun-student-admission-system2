@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Admissions overview · Demonstration{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Staff workspace · Demonstration</p><h1>Admissions overview</h1><p>A focused view of sample application activity. Records and metrics are for prototype use only.</p></div><a class="btn" href="/admin/applications">Review applications</a></div>
+<div class="stats-grid">
+  <article class="stat-card"><span>Total records</span><strong>{{ stats.total|default(0) }}</strong></article>
+  <article class="stat-card"><span>Awaiting review</span><strong>{{ stats.pending|default(0) }}</strong></article>
+  <article class="stat-card"><span>In review</span><strong>{{ stats.under_review|default(0) }}</strong></article>
+  <article class="stat-card"><span>Approved</span><strong>{{ stats.approved|default(0) }}</strong></article>
+  <article class="stat-card"><span>Rejected</span><strong>{{ stats.rejected|default(0) }}</strong></article>
+</div>
+<section class="card">
+  <div class="card-header"><div><h2>Recently updated records</h2><p>Latest sample applications in the workspace.</p></div><a class="table-link" href="/admin/applications">View all</a></div>
+  {% if recent_applications %}
+  <div class="table-wrap"><table><thead><tr><th scope="col">Applicant</th><th scope="col">Programme</th><th scope="col">Updated</th><th scope="col">Status</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
+  {% for application in recent_applications %}<tr><td class="person-cell" data-label="Applicant"><strong>{{ application.applicant.full_name or 'Unnamed applicant' }}</strong><span>{{ application.applicant.email or 'No email' }}</span></td><td data-label="Programme">{{ application.programme or 'Not selected' }}</td><td data-label="Updated">{{ application.updated_at or '—' }}</td><td data-label="Status"><span class="status-pill {{ (application.status or 'pending')|lower|replace(' ', '-') }}">{{ application.status or 'Pending' }}</span></td><td data-label="Action"><a class="table-link" href="/admin/applications/{{ application.id }}">Open record</a></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state"><span class="empty-icon" aria-hidden="true">0</span><h3>No recent records</h3><p>Sample applications will appear here when available in the demonstration workspace.</p><a class="btn btn-secondary btn-small" href="/admin/applications">Browse applications</a></div>{% endif %}
+</section>
+{% endblock %}

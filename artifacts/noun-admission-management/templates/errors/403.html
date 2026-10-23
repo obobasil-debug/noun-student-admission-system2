@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Access restricted · Demonstration{% endblock %}
+{% block content %}
+<section class="card" style="max-width:680px;margin:56px auto;text-align:center">
+  <p class="eyebrow">Access restricted</p>
+  <h1>This area is for a different account type</h1>
+  <p class="muted">Sign in with an account that has permission to view this page.</p>
+  <div class="form-actions" style="justify-content:center">
+    <a class="btn btn-secondary" href="{{ url_for('home') }}">Home</a>
+    <a class="btn" href="{{ url_for('auth.login') }}">Applicant sign in</a>
+  </div>
+</section>
+{% endblock %}

@@ -16,6 +16,11 @@ out-tsc
 
 # dependencies
 node_modules
+.pythonlibs
+.venv
+__pycache__/
+*.py[cod]
+/artifacts/noun-admission-management/instance/
 
 # IDEs and editors
 /.idea

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Personal information · Demonstration{% endblock %}
+{% block content %}
+<a class="back-link" href="/dashboard">← Application overview</a>
+<div class="page-heading"><div><p class="eyebrow">Step 1 of 4 · Applicant details</p><h1>Personal information</h1><p>Enter sample contact details. Use fictional information for this prototype.</p></div></div>
+<section class="card">
+  {% if application.status != 'Draft' %}
+  <div class="notice-card" style="margin-bottom:20px"><span class="notice-icon" aria-hidden="true">i</span><div><strong>This application is read-only</strong><p>Your application has been submitted. Personal information cannot be edited in this prototype.</p></div></div>
+  <dl class="summary-list">
+    <div class="summary-item"><dt>Date of birth</dt><dd>{{ application.date_of_birth or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Gender</dt><dd>{{ application.gender or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Phone</dt><dd>{{ application.phone or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>State of origin</dt><dd>{{ application.state_of_origin or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Address</dt><dd>{{ application.address or 'Not provided' }}</dd></div>
+  </dl>
+  {% else %}
+  <form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field-grid">
+      <div class="field"><label for="date_of_birth">Date of birth <span class="required">*</span></label><input id="date_of_birth" name="date_of_birth" type="date" required value="{{ application.date_of_birth or '' }}"></div>
+      <div class="field"><label for="gender">Gender <span class="required">*</span></label><select id="gender" name="gender" required><option value="">Select an option</option>{% for item in ['Female', 'Male', 'Another identity', 'Prefer not to say'] %}<option value="{{ item }}" {% if application.gender == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="phone">Phone number <span class="required">*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" required value="{{ application.phone or '' }}"></div>
+      <div class="field"><label for="state_of_origin">State of origin <span class="required">*</span></label><input id="state_of_origin" name="state_of_origin" autocomplete="address-level1" required value="{{ application.state_of_origin or '' }}"></div>
+      <div class="field full"><label for="address">Contact address <span class="required">*</span></label><textarea id="address" name="address" autocomplete="street-address" required>{{ application.address or '' }}</textarea></div>
+    </div>
+    <div class="form-actions"><a class="btn btn-secondary" href="/dashboard">Save and exit</a><button class="btn" type="submit">Save and continue</button></div>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

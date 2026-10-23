@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Staff sign in · Demonstration{% endblock %}
+{% block content %}
+<div class="auth-layout">
+  <div class="auth-top"><span class="admin-mark">Staff workspace</span><h1>Review applications</h1><p class="muted">Demonstration access for admissions administrators.</p></div>
+  <section class="auth-card">
+    <h2>Staff sign in</h2><p class="intro">This is a prototype workspace, not a university system.</p>
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field-grid one-col">
+        <div class="field"><label for="email">Staff email <span class="required">*</span></label><input id="email" name="email" type="email" autocomplete="username" required value="{{ request.form.get('email', '') }}"></div>
+        <div class="field"><label for="password">Password <span class="required">*</span></label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+      </div>
+      <div class="form-actions end"><button class="btn" type="submit">Enter staff workspace</button></div>
+    </form>
+  </section>
+</div>
+{% endblock %}

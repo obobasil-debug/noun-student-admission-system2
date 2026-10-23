@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Applicant dashboard · Demonstration{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Applicant workspace · {{ current_user.full_name }}</p><h1>Your application</h1><p>Reference <strong>{{ application.reference }}</strong> · Work through the sections below at your own pace. This record is part of a demonstration only.</p></div><a class="btn btn-secondary" href="/application/status">View status</a></div>
+<div class="dashboard-grid">
+  <div>
+    <section class="metric-card">
+      <h2>Application progress</h2>
+      <div class="metric-value">{{ completion_percent|default(0) }}%</div>
+      <div class="progress" role="progressbar" aria-label="Application completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ completion_percent|default(0) }}"><span style="width:{{ completion_percent|default(0) }}%"></span></div>
+      <p>Complete the sections below to prepare your sample application.</p>
+    </section>
+    <section class="card" style="margin-top:18px">
+      <div class="card-header"><div><h2>Application sections</h2><p>Review and update each part of your record.</p></div><span class="status-pill {{ (status or 'in progress')|lower|replace(' ', '-') }}">{{ status|default('In progress') }}</span></div>
+      <div class="steps">
+        <div class="step {% if application.date_of_birth or application.phone %}done{% else %}current{% endif %}"><span class="step-dot">1</span><div class="step-copy"><strong>Personal information</strong><span>Contact and identity details</span></div><a class="table-link" style="margin-left:auto" href="/application/personal">{% if application.status == 'Draft' %}Edit{% else %}View{% endif %}</a></div>
+        <div class="step {% if application.highest_qualification %}done{% endif %}"><span class="step-dot">2</span><div class="step-copy"><strong>Academic history</strong><span>Previous education details</span></div><a class="table-link" style="margin-left:auto" href="/application/academic">{% if application.status == 'Draft' %}Edit{% else %}View{% endif %}</a></div>
+        <div class="step {% if application.programme %}done{% endif %}"><span class="step-dot">3</span><div class="step-copy"><strong>Programme choice</strong><span>Preferred study area</span></div><a class="table-link" style="margin-left:auto" href="/application/programme">{% if application.status == 'Draft' %}Edit{% else %}View{% endif %}</a></div>
+        <div class="step"><span class="step-dot">4</span><div class="step-copy"><strong>Review</strong><span>Check your sample application summary</span></div><a class="table-link" style="margin-left:auto" href="/application/review">Review</a></div>
+      </div>
+    </section>
+  </div>
+  <aside>
+    <section class="card"><div class="card-header"><div><h3>Current status</h3><p>Latest state of this sample record</p></div></div><span class="status-pill {{ (status or 'in progress')|lower|replace(' ', '-') }}">{{ status|default('In progress') }}</span><p class="muted" style="margin-top:14px;font-size:12px">Statuses here are illustrative and do not indicate an admissions outcome.</p><a class="table-link" href="/application/status">See status details</a></section>
+    <div class="notice-card" style="margin-top:16px"><span class="notice-icon" aria-hidden="true">i</span><div><strong>Prototype reminder</strong><p>Use fictional information only. Do not upload or enter real personal documents.</p></div></div>
+  </aside>
+</div>
+{% endblock %}

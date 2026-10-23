@@ -1,0 +1,1 @@
+- [Artifact workflow working directory](artifact-workflow-working-directory.md) — managed artifact commands run from the artifact directory; use relative commands there.

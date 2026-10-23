@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "NOUN Student Admission Management System"
+description = "An academic demonstration prototype for managing student applications, qualification reviews, and admissions status at the National Open University of Nigeria. Includes applicant registration and tracking plus a protected administrator workspace."
+version = "1.0.0"
+id = "artifacts/noun-admission-management"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20133
+
+[services.development]
+run = "python app.py"
+
+[services.production.build]
+args = ["python", "-m", "compileall", "-q", "artifacts/noun-admission-management"]
+
+[services.production.run]
+args = ["gunicorn", "--chdir", "artifacts/noun-admission-management", "app:app", "--bind", "0.0.0.0:8080", "--workers", "2"]
+
+[services.production.run.env]
+PORT = "8080"
+
+[services.production.health.startup]
+path = "/"
+
+[services.env]
+PORT = "20133"
+BASE_PATH = "/"

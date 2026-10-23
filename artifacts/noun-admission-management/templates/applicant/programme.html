@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Programme choice · Demonstration{% endblock %}
+{% block content %}
+<a class="back-link" href="/dashboard">← Application overview</a>
+<div class="page-heading"><div><p class="eyebrow">Step 3 of 4 · Study preference</p><h1>Programme choice</h1><p>Choose a sample programme and study option. Choices shown are for demonstrating the interface only.</p></div></div>
+<section class="card">
+  {% if application.status != 'Draft' %}
+  <div class="notice-card" style="margin-bottom:20px"><span class="notice-icon" aria-hidden="true">i</span><div><strong>This application is read-only</strong><p>Your application has been submitted. Programme preferences cannot be edited in this prototype.</p></div></div>
+  <dl class="summary-list"><div class="summary-item"><dt>Programme</dt><dd>{{ application.programme or 'Not provided' }}</dd></div><div class="summary-item"><dt>Study centre</dt><dd>{{ application.study_centre or 'Not provided' }}</dd></div></dl>
+  {% else %}
+  <form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field-grid">
+      <div class="field"><label for="programme">Programme <span class="required">*</span></label><select id="programme" name="programme" required><option value="">Select a sample programme</option>{% for item in programmes %}<option value="{{ item }}" {% if application.programme == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="study_centre">Preferred study centre <span class="required">*</span></label><select id="study_centre" name="study_centre" required><option value="">Choose a study centre</option>{% for item in study_centres %}<option value="{{ item }}" {% if application.study_centre == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></div>
+    </div>
+    <div class="callout" style="margin-top:20px"><strong>Demonstration content</strong>Programme labels and choices on this page do not represent a current official course catalogue or admissions offer.</div>
+    <div class="form-actions"><a class="btn btn-secondary" href="/application/academic">Back</a><button class="btn" type="submit">Save and continue</button></div>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

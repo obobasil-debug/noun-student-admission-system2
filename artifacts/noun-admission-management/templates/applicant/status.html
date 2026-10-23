@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Application status · Demonstration{% endblock %}
+{% block content %}
+<a class="back-link" href="/dashboard">← Application overview</a>
+<div class="page-heading"><div><p class="eyebrow">Applicant workspace</p><h1>Application status</h1><p>A simple view of the current state of your sample record.</p></div><span class="status-pill {{ (application.status or 'in progress')|lower|replace(' ', '-') }}">{{ application.status|default('In progress') }}</span></div>
+<div class="dashboard-grid">
+  <section class="card"><div class="card-header"><div><h2>Progress timeline</h2><p>Status descriptions are illustrative for this prototype.</p></div></div>
+    <div class="steps">
+      <div class="step done"><span class="step-dot">1</span><div class="step-copy"><strong>Application record created</strong><span>Your sample workspace record is available.</span></div></div>
+      <div class="step {% if application.status != 'Draft' %}done{% else %}current{% endif %}"><span class="step-dot">2</span><div class="step-copy"><strong>Details prepared</strong><span>Personal, academic and programme sections can be reviewed.</span></div></div>
+      <div class="step {% if application.status == 'Under Review' %}current{% endif %}"><span class="step-dot">3</span><div class="step-copy"><strong>Demonstration review</strong><span>A sample reviewer may update this record.</span></div></div>
+      <div class="step"><span class="step-dot">4</span><div class="step-copy"><strong>Outcome</strong><span>No official admissions decision is made in this prototype.</span></div></div>
+    </div>
+  </section>
+  <aside><div class="notice-card"><span class="notice-icon" aria-hidden="true">i</span><div><strong>Not an official status</strong><p>This display does not confirm eligibility, submission to the university, or admission. For authoritative updates, use official university channels.</p></div></div><section class="card" style="margin-top:16px"><h3>Record summary</h3><p class="inline-info"><strong>Applicant</strong> {{ application.applicant.full_name or 'Not provided' }}</p><p class="inline-info"><strong>Programme</strong> {{ application.programme or 'Not selected' }}</p><p class="inline-info"><strong>Status</strong> {{ application.status or 'Draft' }}</p><a class="table-link" href="/application/details">View record details</a></section></aside>
+</div>
+{% endblock %}

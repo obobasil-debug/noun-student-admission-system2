@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Academic history · Demonstration{% endblock %}
+{% block content %}
+<a class="back-link" href="/dashboard">← Application overview</a>
+<div class="page-heading"><div><p class="eyebrow">Step 2 of 4 · Previous education</p><h1>Academic history</h1><p>Add sample qualification details for the demonstration record.</p></div></div>
+<section class="card">
+  {% if application.status != 'Draft' %}
+  <div class="notice-card" style="margin-bottom:20px"><span class="notice-icon" aria-hidden="true">i</span><div><strong>This application is read-only</strong><p>Your application has been submitted. Academic information cannot be edited in this prototype.</p></div></div>
+  <dl class="summary-list">
+    <div class="summary-item"><dt>Highest qualification</dt><dd>{{ application.highest_qualification or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Prior institution</dt><dd>{{ application.prior_institution or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Examination body</dt><dd>{{ application.examination_body or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Graduation year</dt><dd>{{ application.graduation_year or 'Not provided' }}</dd></div>
+    <div class="summary-item"><dt>Grade</dt><dd>{{ application.grade or 'Not provided' }}</dd></div>
+  </dl>
+  {% else %}
+  <form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="field-grid">
+      <div class="field"><label for="highest_qualification">Highest qualification <span class="required">*</span></label><select id="highest_qualification" name="highest_qualification" required><option value="">Choose a qualification</option>{% for item in qualifications|default([]) %}<option value="{{ item }}" {% if application.highest_qualification == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="prior_institution">Prior institution <span class="required">*</span></label><input id="prior_institution" name="prior_institution" required maxlength="160" value="{{ application.prior_institution or '' }}"></div>
+      <div class="field"><label for="examination_body">Examination body <span class="required">*</span></label><input id="examination_body" name="examination_body" required maxlength="120" value="{{ application.examination_body or '' }}"></div>
+      <div class="field"><label for="graduation_year">Completion year</label><input id="graduation_year" name="graduation_year" type="number" min="1950" max="2100" value="{{ application.graduation_year or '' }}"></div>
+      <div class="field"><label for="grade">Grade / result</label><input id="grade" name="grade" value="{{ application.grade or '' }}"></div>
+    </div>
+    <div class="form-actions"><a class="btn btn-secondary" href="/application/personal">Back</a><button class="btn" type="submit">Save and continue</button></div>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

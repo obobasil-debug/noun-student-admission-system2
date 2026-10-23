@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174b38">
+  <meta name="description" content="A demonstration prototype for an academic admissions workflow. Not an official university portal.">
+  <title>{% block title %}NOUN Admissions Demonstration{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav-wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">N</span>
+        <span class="brand-copy"><strong>Admissions workspace</strong><span>Academic demonstration</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        {% if current_user.is_authenticated %}
+          {% if current_user.role|default('') == 'admin' or current_user.is_admin|default(false) %}
+            <a href="/admin/">Overview</a><a href="/admin/applications">Applications</a>
+            <span class="nav-user">{{ current_user.full_name or current_user.email }}</span>
+            <form method="post" action="/logout" class="nav-logout"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Sign out</button></form>
+          {% else %}
+            <a href="/dashboard">My application</a><a href="/application/status">Status</a>
+            <span class="nav-user">{{ current_user.full_name or current_user.email }}</span>
+            <form method="post" action="/logout" class="nav-logout"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Sign out</button></form>
+          {% endif %}
+        {% else %}
+          <a href="/">Home</a><a href="/login">Applicant sign in</a><a href="/register">Create account</a>
+          <a href="/admin/login">Staff sign in</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <aside class="demo-strip" aria-label="Prototype notice">
+    <div class="shell demo-inner">
+      <span class="demo-label">Demonstration</span>
+      <p>Academic prototype only. This is not an official NOUN portal; do not submit real personal documents or rely on it for admissions decisions.</p>
+    </div>
+  </aside>
+    <div class="shell flash-stack" role="status" aria-live="polite">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+  <main class="main-content">
+    <div class="shell">{% block content %}{% endblock %}</div>
+  </main>
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <p><span class="footer-mark">Academic admissions demonstration</span> · Not an official university service.</p>
+      <p>Use fictional information for demonstration purposes.</p>
+    </div>
+  </footer>
+</body>
+</html>

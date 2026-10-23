@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Applications · Demonstration{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Staff workspace</p><h1>Applications</h1><p>Search and review sample applicant records in this demonstration.</p></div><div class="heading-actions"><a class="btn btn-secondary" href="/admin/">Overview</a><a class="btn btn-secondary" href="/admin/applications/export.csv">Export CSV</a></div></div>
+<section class="card">
+  <form class="toolbar" method="get" action="">
+    <div class="filters">
+      <div class="filter-item" style="flex:1"><label for="q">Search records</label><input class="search-input" id="q" name="q" type="search" placeholder="Name, email or reference" value="{{ q or '' }}"></div>
+      <div class="filter-item"><label for="status">Filter by status</label><select class="filter-select" id="status" name="status"><option value="">All statuses</option>{% for item in statuses|default([]) %}<option value="{{ item }}" {% if request.args.get('status') == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></div>
+      <button class="btn btn-small" type="submit">Apply filters</button>
+    </div>
+  </form>
+  {% if applications %}
+  <div class="table-wrap"><table><thead><tr><th scope="col">Applicant</th><th scope="col">Reference</th><th scope="col">Programme</th><th scope="col">Submitted</th><th scope="col">Status</th><th scope="col">Review</th></tr></thead><tbody>
+    {% for application in applications %}<tr><td class="person-cell" data-label="Applicant"><strong>{{ application.applicant.full_name or 'Unnamed applicant' }}</strong><span>{{ application.applicant.email or 'No email' }}</span></td><td data-label="Reference">{{ application.reference or '—' }}</td><td data-label="Programme">{{ application.programme or 'Not selected' }}</td><td data-label="Submitted">{{ application.submitted_at or application.created_at or '—' }}</td><td data-label="Status"><span class="status-pill {{ (application.status or 'pending')|lower|replace(' ', '-') }}">{{ application.status or 'Pending' }}</span></td><td data-label="Review"><a class="table-link" href="/admin/applications/{{ application.id }}">Open record</a></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}
+  <div class="empty-state"><span class="empty-icon" aria-hidden="true">—</span><h3>No matching applications</h3><p>Try a different search or status filter. This workspace only displays records provided to the demonstration.</p><a class="btn btn-secondary btn-small" href="/admin/applications">Clear filters</a></div>
+  {% endif %}
+</section>
+{% endblock %}
